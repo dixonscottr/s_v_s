@@ -1,0 +1,2 @@
+class Shiba < ApplicationRecord
+end
