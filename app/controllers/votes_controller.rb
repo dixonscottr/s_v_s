@@ -3,15 +3,16 @@ class VotesController < ApiController
   def index
     match = Match.find_by(id: params[:match_id])
     votes = match.votes
-    render json: {status: 'Success', message: 'loaded all votes', data: votes}, status: :ok
+    loaded_all_resources_json("votes", votes)
   end
 
   def show
     vote = Vote.find_by(id: params[:id])
-    if vote
-      render json: {status: 'No resource', data: vote}
+    match = Match.find_by(id: params[:match_id])
+    if vote && match.votes.include?(vote)
+      loaded_one_resource_json("vote", vote)
     else
-      render_error_json
+      missing_resource_json
     end
   end
 
@@ -20,9 +21,19 @@ class VotesController < ApiController
     match = Match.find_by(id: params[:match_id])
     vote.match = match
     if vote.save
-      render json: {status: 'Success', message: 'Created a vote', data: vote}, status: :ok
+      created_a_resource_json("vote", vote)
     else
-      render json: {message: 'Error creating vote', data: vote.errors.full_messages}
+      resource_not_saved_json(vote.errors.full_messages)
+    end
+  end
+
+  def destroy
+    vote = Vote.find_by(id: params[:id])
+    if vote
+      vote.destroy
+      deleted_a_resource_json("vote")
+    else
+      missing_resource_json
     end
   end
 

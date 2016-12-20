@@ -1,8 +1,28 @@
 class ApiController < ApplicationController
   skip_before_action :verify_authenticity_token
 
-  def render_error_json(status)
-    render json: {status: 'No resource', data: []}
+  def missing_resource_json
+    render json: {message: 'Resource not found', data: []}, status: 404
+  end
+
+  def resource_not_saved_json(errors)
+    render json: {message: 'Resource not saved', data: errors}, status: 422
+  end
+
+  def loaded_all_resources_json(resource_name, data)
+    render json: {message: "Loaded all #{resource_name}", data: data}, status: 200
+  end
+
+  def loaded_one_resource_json(resource_name, data)
+    render json: {message: "Loaded a #{resource_name}", data: data}, status: 200
+  end
+
+  def created_a_resource_json(resource_name, data)
+    render json: {message: "Created a #{resource_name}", data: data}, status: 201
+  end
+
+  def deleted_a_resource_json(resource_name)
+    render json: {status: 'Success', message: "#{resource_name} deleted"}, status: 204
   end
 
   private

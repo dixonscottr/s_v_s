@@ -2,24 +2,24 @@ class ShibasController < ApiController
 
   def index
     shibas = Shiba.all
-    render json: {status: 'Success', message: 'loaded all shibas', data: shibas}, status: :ok
+    loaded_all_resources_json("shibas", shibas)
   end
 
   def create
     shiba = Shiba.new(shiba_params)
     if shiba.save
-      render json: {status: 'Success', message: 'Created a shiba', data: shiba}, status: :ok
+      created_a_resource_json("shiba", shiba)
     else
-      render json: {message: 'Error creating shiba', data: shiba.errors.full_messages}
+      resource_not_saved_json(shiba.errors.full_messages)
     end
   end
 
   def show
     shiba = Shiba.find_by(id: params[:id])
     if shiba
-      render json: {status: 'Success', message: 'loaded a shiba', data: shiba}, status: :ok
+      loaded_one_resource_json("shiba", shiba)
     else
-      render_error_json
+      missing_resource_json
     end
   end
 
@@ -27,9 +27,9 @@ class ShibasController < ApiController
     shiba = Shiba.find_by(id: params[:id])
     if shiba
       shiba.destroy
-      render json: {status: 'Success', message: 'Shiba deleted'}, status: :ok
+      deleted_a_resource_json("shiba")
     else
-      render_error_json
+      missing_resource_json
     end
   end
 
