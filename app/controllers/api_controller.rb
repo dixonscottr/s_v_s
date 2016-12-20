@@ -1,5 +1,5 @@
 class ApiController < ApplicationController
-  skip_before_action :verify_authenticity_token
+  include ActionController::HttpAuthentication::Token::ControllerMethods
   before_action :authenticate
 
   def missing_resource_json
