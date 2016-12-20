@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161219222528) do
+ActiveRecord::Schema.define(version: 20161219202533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,10 +32,12 @@ ActiveRecord::Schema.define(version: 20161219222528) do
   end
 
   create_table "shibas", force: :cascade do |t|
-    t.string   "name"
-    t.string   "url"
+    t.string   "name",       null: false
+    t.string   "url",        null: false
+    t.integer  "creator_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["creator_id"], name: "index_shibas_on_creator_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -43,9 +45,9 @@ ActiveRecord::Schema.define(version: 20161219222528) do
     t.string   "email",                           null: false
     t.string   "password_digest"
     t.boolean  "admin",           default: false
+    t.string   "token"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
-    t.string   "token"
   end
 
   create_table "votes", force: :cascade do |t|
