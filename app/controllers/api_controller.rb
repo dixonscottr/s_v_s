@@ -1,6 +1,6 @@
 class ApiController < ApplicationController
   include ActionController::HttpAuthentication::Token::ControllerMethods
-  before_action :authenticate
+  before_action :authenticate, only: [:create, :destroy]
 
   def missing_resource_json
     render json: {message: 'Resource not found', data: []}, status: 404
