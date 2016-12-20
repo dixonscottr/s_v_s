@@ -3,6 +3,7 @@ require 'uri'
 class Shiba < ApplicationRecord
   
   has_many :matches
+  has_many :votes
   has_many :voters, through: :votes, class_name: User
   belongs_to :creator
   belongs_to :matched_shiba, class_name: Shiba

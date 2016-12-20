@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   has_many :matches, foreign_key: :creator
   has_many :votes, foreign_key: :voter
-  has_many :voted_for_shibas, through: :votes
+  has_many :voted_for_shibas, through: :votes, source: :shiba
 
   validates_presence_of :username, :email
   validates_uniqueness_of :username, :email
