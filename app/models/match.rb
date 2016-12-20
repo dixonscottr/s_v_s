@@ -5,8 +5,14 @@ class Match < ApplicationRecord
   belongs_to :shiba_two, class_name: Shiba
   has_one    :winner, class_name: Shiba
   has_one    :loser, class_name: Shiba
+  has_many   :votes
+  has_many   :voters, through: :votes, foreign_key: :voter_id
 
   validates_presence_of :creator, :shiba_one, :shiba_two
-  validates_uniqueness_of :shiba_one, scope: 
+  validates_uniqueness_of :shiba_one, scope: :shiba_two
+
+  def vote_count
+    self.votes.count
+  end
 
 end
