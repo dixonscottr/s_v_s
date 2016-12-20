@@ -1,6 +1,6 @@
 class UsersController < ApiController
 
-  before_action :authenticate
+  skip_before_action :authenticate, only: [:create]
 
   def create
     user = User.new(user_params)
@@ -35,12 +35,5 @@ class UsersController < ApiController
   def user_params
     params.require(:user).permit(:username, :email, :password, :admin)
   end
-
-  def authenticate
-    authenticate_or_request_with_http_token do |token, options|
-      User.find_by(token: token)
-    end
-  end
-
   
 end

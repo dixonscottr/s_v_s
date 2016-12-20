@@ -1,5 +1,6 @@
 class ApiController < ApplicationController
   skip_before_action :verify_authenticity_token
+  before_action :authenticate
 
   def missing_resource_json
     render json: {message: 'Resource not found', data: []}, status: 404
@@ -42,6 +43,12 @@ class ApiController < ApplicationController
     def unauthorize
       head status: :unauthorized
       return false
+    end
+
+    def authenticate
+      authenticate_or_request_with_http_token do |token, options|
+        User.find_by(token: token)
+      end
     end
 
 end
