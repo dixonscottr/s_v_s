@@ -1,16 +1,7 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  # namespace :api do 
-  #   namespace :v1 do 
-  #       resources :shibas
-  #       resources :matches
-  #       resources :users
-  #       resources :votes
-  #   end 
-  # end 
-  resources :shibas
-  resources :matches do
-    resources :votes
+  resources :shibas, only: [:index, :create, :show, :destroy]
+  resources :matches, only: [:index, :create, :show, :destroy] do
+    resources :votes, only: [:index, :create, :show, :destroy]
   end
-  resources :users
+  resources :users, only: [:create, :show, :destroy]
 end

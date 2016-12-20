@@ -5,21 +5,21 @@ class MatchesController < ApiController
     loaded_all_resources_json('matches', matches)
   end
 
-  def show
-    match = Match.find_by(id: params[:id])
-    if match
-      loaded_one_resource_json('match', match)
-    else
-      missing_resource_json
-    end
-  end
-
   def create
     match = Match.new(match_params)
     if match.save
       created_a_resource_json("match", match)
     else
       resource_not_saved_json(match.errors.full_messages)
+    end
+  end
+
+  def show
+    match = Match.find_by(id: params[:id])
+    if match
+      loaded_one_resource_json('match', match)
+    else
+      missing_resource_json
     end
   end
 

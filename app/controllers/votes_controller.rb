@@ -6,16 +6,6 @@ class VotesController < ApiController
     loaded_all_resources_json("votes", votes)
   end
 
-  def show
-    vote = Vote.find_by(id: params[:id])
-    match = Match.find_by(id: params[:match_id])
-    if vote && match.votes.include?(vote)
-      loaded_one_resource_json("vote", vote)
-    else
-      missing_resource_json
-    end
-  end
-
   def create
     vote = Vote.new(vote_params)
     match = Match.find_by(id: params[:match_id])
@@ -24,6 +14,16 @@ class VotesController < ApiController
       created_a_resource_json("vote", vote)
     else
       resource_not_saved_json(vote.errors.full_messages)
+    end
+  end
+
+  def show
+    vote = Vote.find_by(id: params[:id])
+    match = Match.find_by(id: params[:match_id])
+    if vote && match.votes.include?(vote)
+      loaded_one_resource_json("vote", vote)
+    else
+      missing_resource_json
     end
   end
 
