@@ -29,6 +29,7 @@ gem 'better_errors'
 gem 'figaro'
 gem 'has_secure_token'
 gem 'jwt'
+gem 'simple_command'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
