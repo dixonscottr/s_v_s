@@ -1,6 +1,6 @@
 class ApiController < ApplicationController
   include ActionController::HttpAuthentication::Token::ControllerMethods
-  before_action :authenticate, only: [:create, :destroy]
+  before_action :authenticate_request, only: [:create, :destroy]
 
   def missing_resource_json
     render json: {message: 'Resource not found', data: []}, status: 404
@@ -45,7 +45,7 @@ class ApiController < ApplicationController
       return false
     end
 
-    def authenticate
+    def authenticate_request
       authenticate_or_request_with_http_token do |token, options|
         User.find_by(token: token)
       end

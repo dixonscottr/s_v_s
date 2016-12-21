@@ -4,4 +4,5 @@ Rails.application.routes.draw do
     resources :votes, only: [:index, :create, :show, :destroy]
   end
   resources :users, only: [:create, :show, :destroy]
+  post 'authenticate', to: 'authentication#authenticate'
 end
