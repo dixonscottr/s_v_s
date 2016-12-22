@@ -30,6 +30,7 @@ gem 'figaro'
 gem 'has_secure_token'
 gem 'jwt'
 gem 'simple_command'
+gem 'rack-cors', '~> 0.3.1'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
