@@ -1,5 +1,5 @@
 class ApiController < ApplicationController
-  include ActionController::HttpAuthentication::Token::ControllerMethods
+  # include ActionController::HttpAuthentication::Token::ControllerMethods
   # before_action :authenticate_request, only: [:create, :destroy]
 
   def missing_resource_json
@@ -27,23 +27,23 @@ class ApiController < ApplicationController
   end
 
   private
-    def authenticate_user
-      user_token = request.headers['X-USER-TOKEN']
-      if user_token
-        @user = User.find_by_token(user_token)
-        #Unauthorize if a user object is not returned
-        if @user.nil?
-          return unauthorize
-        end
-      else
-        return unauthorize
-      end
-    end
+    # def authenticate_user
+    #   user_token = request.headers['X-USER-TOKEN']
+    #   if user_token
+    #     @user = User.find_by_token(user_token)
+    #     #Unauthorize if a user object is not returned
+    #     if @user.nil?
+    #       return unauthorize
+    #     end
+    #   else
+    #     return unauthorize
+    #   end
+    # end
 
-    def unauthorize
-      head status: :unauthorized
-      return false
-    end
+    # def unauthorize
+    #   head status: :unauthorized
+    #   return false
+    # end
 
     # def authenticate_request
     #   authenticate_or_request_with_http_token do |token, options|
